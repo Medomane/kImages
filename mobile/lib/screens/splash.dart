@@ -5,14 +5,14 @@ class SplashState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
         body: Center(
             child: Padding(
-              padding: EdgeInsets.all(60),
+              padding: const EdgeInsets.all(60),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Image(image: AssetImage("images/icon.png"),fit: BoxFit.fill),
                   SizedBox(height: 50,),
                   Text("Par KSoft SARL")
