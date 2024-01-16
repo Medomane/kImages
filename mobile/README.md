@@ -1,6 +1,6 @@
-# kinventory
+# kImages
 
-kInventory is an inventory management application
+kImages is an images management application
 
 ## Getting Started
 

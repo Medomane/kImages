@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -28,6 +29,7 @@ namespace kImages.Controllers
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.ReasonPhrase = ex.Message.Replace(Environment.NewLine, "") + ".";
+                System.IO.File.AppendAllText("D:\\log.txt", ex.GetExceptionDetails());
             }
             return response;
         }
@@ -48,6 +50,13 @@ namespace kImages.Controllers
             str = str.Trim();
             if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str)) return true;
             return str == "" || str.ToLower().Equals("null");
+        }
+        public static string GetExceptionDetails(this Exception exception)
+        {
+            var properties = exception.GetType().GetProperties();
+            return $"--------------------------------------------------------------------------------{Environment.NewLine}" +
+                   string.Join(Environment.NewLine, (from property in properties let value = property.GetValue(exception, null) select $"{property.Name} = {(value != null ? value.ToString() : string.Empty)}").ToArray()) +
+                   $"{Environment.NewLine}###### {Environment.NewLine}________________________________________________________________________________{Environment.NewLine}{Environment.NewLine}";
         }
     }
 }

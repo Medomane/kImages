@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../Helpers/data.dart';
@@ -8,7 +9,8 @@ import '../Helpers/func.dart';
 import '../Helpers/http.dart';
 
 class SynchronizeState extends StatefulWidget {
-  const SynchronizeState({super.key});
+  final List<File> list;
+  const SynchronizeState(this.list,{super.key});
   @override
   State<SynchronizeState> createState() => _SynchronizeState();
 }
@@ -18,9 +20,11 @@ class _SynchronizeState extends State<SynchronizeState>{
   final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = true;
+  late List<File> list;
   @override
   void initState(){
     super.initState();
+    list = widget.list;
     _initUrl();
   }
   _initUrl() {
@@ -34,6 +38,7 @@ class _SynchronizeState extends State<SynchronizeState>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Synchronisation')),
       body: _isLoading ? const Center(child: CircularProgressIndicator()):AnimationLimiter(
         child: Form(
           key: _formKey,
@@ -72,7 +77,7 @@ class _SynchronizeState extends State<SynchronizeState>{
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
             if(await Http.setUrl(_serverUrlField.text)){
-              Fluttertoast.showToast(msg: "Upload images",toastLength: Toast.LENGTH_SHORT);
+              Http.refreshData(context, list, _btnController);
             }
           }
           _btnController.reset();

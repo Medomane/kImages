@@ -13,7 +13,7 @@ class Wrapper extends StatelessWidget {
         initialData: null,
         future: getData(),
         builder: (ctx,snap){
-          if(snap.hasData && snap.connectionState == ConnectionState.done && snap.data != null) {
+          if(snap.connectionState == ConnectionState.done) {
             return const HomeState();
           }  else {
             return const SplashState();
@@ -23,7 +23,7 @@ class Wrapper extends StatelessWidget {
   }
 
   Future<bool> getData() async {
-    await Future.delayed(const Duration(seconds: MyGlobal.duration));
+    //await Future.delayed(const Duration(seconds: MyGlobal.duration));
     return true;
   }
 }
