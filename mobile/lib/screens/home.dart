@@ -28,7 +28,7 @@ class _HomeState extends State<HomeState> {
     Future.microtask(() async {
       images = (await Directory((await getApplicationDocumentsDirectory()).path)
           .list(recursive: false)
-          .where((event) => event.path.endsWith("jpg") || event.path.endsWith("png"))
+          .where((event) => event.path.endsWith("jpg") || event.path.endsWith("jpeg") || event.path.endsWith("png"))
           .map((event) => event as File)
           .toList()).cast<File>();
       setState(() {_isLoading = false;});

@@ -43,7 +43,7 @@ class Http{
       final Dio dio = Dio();
       Map<String, dynamic> map = <String, dynamic>{};
       for(var img in list){
-        map.addAll({basename(img.path).replaceAll(".png", "").replaceAll(".jpg", ""):(await MultipartFile.fromFile(img.path,filename: basename(img.path)))});
+        map.addAll({basename(img.path).replaceAll(".png", "").replaceAll(".jpg", "").replaceAll(".jpeg", ""):(await MultipartFile.fromFile(img.path,filename: basename(img.path)))});
       }
       FormData formData = FormData.fromMap(map);
       var response = await dio.post(await MyGlobal.dataUrl(),
@@ -60,6 +60,7 @@ class Http{
       );
       if(response.statusCode == 200) {
         await Func.endLoading(pd: pd,btnController: btn);
+        return true;
       }
       else {
         await Func.showError('Erreur avec le statut: ${response.statusCode} ${response.statusMessage}.',pd: pd,btn: btn);
