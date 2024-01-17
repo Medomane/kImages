@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../Helpers/data.dart';
@@ -77,7 +78,9 @@ class _SynchronizeState extends State<SynchronizeState>{
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
             if(await Http.setUrl(_serverUrlField.text)){
-              Http.refreshData(context, list, _btnController);
+              if(await Http.refreshData(context, list, _btnController)){
+                Fluttertoast.showToast(msg: "Synchronisées aved succès",toastLength: Toast.LENGTH_LONG);
+              }
             }
           }
           _btnController.reset();

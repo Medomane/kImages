@@ -18,10 +18,11 @@ namespace kImages.Controllers
                 var httpRequest = HttpContext.Current.Request;
                 if (httpRequest.Files.Count <= 0) throw new Exception("Pas de fichier .");
                 var files = httpRequest.Files;
-                foreach (HttpPostedFile file in files)
+                for (var i = 0; i < files.Count; i++)
                 {
+                    var file = files[i];
                     var path = Helpers.ImagesPath() ?? throw new Exception("Pas de chemin d'enregistrement des images !!!");
-                    file?.SaveAs($"{path}/{DateTime.Now:ddMMyyyyHHmmss}_{file.FileName}");
+                    file?.SaveAs($"{path}/{file.FileName}");
                 }
                 response.ReasonPhrase = "uploaded successfully";
             }

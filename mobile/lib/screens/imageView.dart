@@ -62,8 +62,8 @@ class _ImageViewState extends State<ImageView>{
                   if (mounted) Navigator.of(context).pop(null);
                 } else {
                   var size = ((await File(_imageFile!.path).length())/1024)/1024;
-                  if(size >= 1){
-                    await Func.showError("La taille de cette image est supérieure à 1mb, cela peut causer des problèmes au niveau de l'affichage !!!");
+                  if(size >= 10){
+                    await Func.showError("La taille de cette image est supérieure à 10mb, cela peut causer des problèmes au niveau de synchronisation !!!");
                     return ;
                   }
                   if (mounted) Navigator.of(context).pop(_imageFile);
