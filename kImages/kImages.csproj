@@ -135,8 +135,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Images.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

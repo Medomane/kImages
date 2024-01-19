@@ -1,0 +1,19 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>kImages</title>
+</head>
+<body>
+<h1>Liste d'images :</h1>
+<div>
+    @foreach (var item in (string[])Model)
+    {
+        <img src="/Content/@item" height="300">
+    }
+</div>
+</body>
+</html>
