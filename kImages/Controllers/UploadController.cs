@@ -38,20 +38,16 @@ namespace kImages.Controllers
 
     public static class Helpers
     {
-        public static string ImagesPath()
-        {
-            var path = GetAppSetting("ABSOLUTE_PATH");
-            return path.IsNull() ? null : path.TrimEnd('\\').TrimEnd('\\').TrimEnd('/').TrimEnd('/');
-        }
-        public static string GetAppSetting(string key) => System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~").AppSettings.Settings[key]?.Value;
+        public static string ImagesPath() => new System.Web.UI.Page().Server.MapPath("~\\Content");
+        //public static string GetAppSetting(string key) => System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~").AppSettings.Settings[key]?.Value;
 
-        public static bool IsNull(this string str)
+        /*public static bool IsNull(this string str)
         {
             if (str == null) return true;
             str = str.Trim();
             if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str)) return true;
             return str == "" || str.ToLower().Equals("null");
-        }
+        }*/
         public static string GetExceptionDetails(this Exception exception)
         {
             var properties = exception.GetType().GetProperties();

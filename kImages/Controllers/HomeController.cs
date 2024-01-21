@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace kImages.Controllers
@@ -8,10 +9,12 @@ namespace kImages.Controllers
         public string Index() => "kImages";
         public ActionResult Images()
         {
-            var files = new System.IO.DirectoryInfo(Helpers.ImagesPath()).GetFiles();
-            var destPath = new System.Web.UI.Page().Server.MapPath("~\\Content");
-            foreach (var f in files) f.CopyTo($"{destPath}/{f.Name}", true);
-            return View("Images", files.Select(f => f.Name).Where(name => name.ToLower().EndsWith("png") || name.ToLower().EndsWith("jpeg") || name.ToLower().EndsWith("jpg")).ToArray());
+            var files = new System.IO.DirectoryInfo(Helpers.ImagesPath())
+                .GetFiles()
+                .Where(f => f.Name.ToLower().EndsWith("png") || f.Name.ToLower().EndsWith("jpeg") || f.Name.ToLower().EndsWith("jpg"))
+                .GroupBy(f => new DateTime(f.LastWriteTime.Year, f.LastWriteTime.Month, f.LastWriteTime.Day))
+                .ToDictionary(g => g.Key, g => g.ToList());
+            return View("Images", files);
         }
     }
 }

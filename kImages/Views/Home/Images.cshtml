@@ -6,13 +6,25 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>kImages</title>
+    <style>
+        li {
+            display: inline;
+            vertical-align: bottom;
+        }
+    </style>
 </head>
 <body>
 <h1>Liste d'images :</h1>
 <div>
-    @foreach (var item in (string[])Model)
+    @foreach (var group in (Dictionary<DateTime, List<FileInfo>>)Model)
     {
-        <img src="/Content/@item" height="300">
+	    <h3>Date : <i>@group.Key.ToString("dd/MM/yyyy")</i></h3>
+	    <ul style="padding: 5px; border-radius: 5px; box-shadow: 0px 0px 8px black; ">
+		    @foreach (var item in group.Value)
+		    {
+			    <li><img src="/Content/@item.Name" height="300" alt="_"></li>
+		    }	
+	    </ul>
     }
 </div>
 </body>
